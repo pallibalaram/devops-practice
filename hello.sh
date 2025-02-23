@@ -1,4 +1,4 @@
-echo "hello iam Balaram"
-echo "hiiiiiiiiiiiiii"
-echo "rapoooo"
-echo "ramesh"
+for i in {1..20}
+do
+    echo"$i"
+done
