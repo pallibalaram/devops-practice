@@ -53,7 +53,7 @@ VALIDATE $? " storing in temporary location"
 cd /app &>> $LOG
 VALIDATE $? "changing directory to app" 
 
-unzip /tmp/catalogue.zip &>> $LOG
+unzip -o /tmp/catalogue.zip &>> $LOG
 VALIDATE $? "unzipping catalogue"
 
 cd /app
