@@ -61,7 +61,7 @@ cd /app
 npm install &>> $LOG
 VALIDATE $? " npm installation"
 
-cp catalogue.service /etc/systemd/system/catalogue.service &>> $LOG
+cp /c/users/BALARAM/repo/catalogue.service /etc/systemd/system/catalogue.service &>> $LOG
 VALIDATE $? "coping to catalogue service"
 
 systemctl daemon-reload &>> $LOG
@@ -76,6 +76,6 @@ VALIDATE $? "starting catalogue"
 dnf install mongodb-org-shell -y &>> $LOG
 VALIDATE $? "install mongodb org"
 
-mongo --host MONGODB-SERVER-IPADDRESS </app/schema/catalogue.js &>> $LOG
+mongo --host mongodb.pavandev.online </app/schema/catalogue.js &>> $LOG
 
 
