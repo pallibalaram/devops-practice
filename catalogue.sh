@@ -61,7 +61,7 @@ cd /app
 npm install &>> $LOG
 VALIDATE $? " npm installation"
 
-cp C/Users/BALARAM/repo/catalogue.service /etc/systemd/system/catalogue.service &>> $LOG
+cp C:/Users/BALARAM/repo/catalogue.service /etc/systemd/system/catalogue.service &>> $LOG
 VALIDATE $? "coping to catalogue service"
 
 systemctl daemon-reload &>> $LOG
