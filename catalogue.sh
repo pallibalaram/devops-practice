@@ -70,7 +70,7 @@ npm install  &>> $LOGFILE
 VALIDATE $? "Installing dependencies"
 
 # use absolute, because catalogue.service exists there
-cp /C:/Users/BALARAM/repo/catalogue.service /etc/systemd/system/catalogue.service &>> $LOGFILE
+cp catalogue.service /etc/systemd/system/catalogue.service &>> $LOGFILE
 
 VALIDATE $? "Copying catalogue service file"
 
