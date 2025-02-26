@@ -5,7 +5,7 @@ R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
-MONGDB_HOST=mongodb.daws76s.online
+MONGDB_HOST=mongod.pavandev.online
 
 TIMESTAMP=$(date +%F-%H-%M-%S)
 LOGFILE="/tmp/$0-$TIMESTAMP.log"
@@ -69,8 +69,8 @@ npm install  &>> $LOGFILE
 
 VALIDATE $? "Installing dependencies"
 
-# use absolute, because catalogue.service exists there
-cp /C:/Users/BALARAM/repo/catalogue.service /etc/systemd/system/catalogue.service &>> $LOGFILE
+
+cp /home/centos/devops-practice/catalogue.service /etc/systemd/system/catalogue.service &>> $LOGFILE
 
 VALIDATE $? "Copying catalogue service file"
 
@@ -86,7 +86,7 @@ systemctl start catalogue &>> $LOGFILE
 
 VALIDATE $? "Starting catalogue"
 
-cp /C:/Users/BALARAM/repo/mongo.repo /etc/yum.repos.d/mongo.repo
+cp /home/centos/devops-practice/mongo.repo /etc/yum.repos.d/mongo.repo
 
 VALIDATE $? "copying mongodb repo"
 
