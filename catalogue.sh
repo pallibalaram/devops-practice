@@ -5,7 +5,7 @@ G="\e[32m"
 Y="\e[33m"
 N="\E[0m"
 TIME=$(date +%F-%H-%M-%S)
-LOG= "/tmp/$0-$TIME.log"
+LOG="/tmp/$0-$TIME.log"
 VALIDATE(){
     if [ $1 -ne 0 ]
     then
@@ -77,5 +77,5 @@ dnf install mongodb-org-shell -y &>> $LOG
 VALIDATE $? "install mongodb org"
 
 mongo --host mongodb.pavandev.online </app/schema/catalogue.js &>> $LOG
-
+VALIDATE $? "Loading catalouge data into MongoDB"
 
