@@ -61,7 +61,7 @@ cd /app
 npm install &>> $LOG
 VALIDATE $? " npm installation"
 
-cp C:/Users/BALARAM/repo/catalogue.service /etc/systemd/system/catalogue.service &>> $LOG
+cp /c/Users/BALARAM/repo/catalogue.service /etc/systemd/system/catalogue.service &>> $LOG
 VALIDATE $? "coping to catalogue service"
 
 systemctl daemon-reload &>> $LOG
@@ -72,6 +72,9 @@ VALIDATE $? "enabling catalogue"
 
 systemctl start catalogue &>> $LOG
 VALIDATE $? "starting catalogue"
+
+cp /c/Users/BALARAM/repo/mongo.repo /etc/yum.repos.d/mongo.repo
+VALIDATE $? "copying mongodb repo"
 
 dnf install mongodb-org-shell -y &>> $LOG
 VALIDATE $? "install mongodb org"
