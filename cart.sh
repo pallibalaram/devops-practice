@@ -47,7 +47,7 @@ fi
 mkdir -p /app &>> $LOG
 VALIDATE $? "Creating directory"
 
-curl -o curl -L -o /tmp/cart.zip https://roboshop-builds.s3.amazonaws.com/cart.zip &>> $LOGFILE
+curl -o /tmp/cart.zip https://roboshop-builds.s3.amazonaws.com/cart.zip &>> $LOGFILE
 VALIDATE $? " storing in temporary location"
 
 cd /app &>> $LOG
