@@ -4,8 +4,8 @@ R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
 N="\E[0m"
-TIME=$(date +%F-%H-%M-%S)
-LOGFILE="/tmp/$0-$TIME.log"
+TIMESTAMP=$(date +%F-%H-%M-%S)
+LOGFILE="/tmp/$0-$TIMESTAMP.log"
 VALIDATE(){
     if [ $1 -ne 0 ]
     then
@@ -44,13 +44,13 @@ else
   echo -e "alrady user exists"
 fi
 
-mkdir -p /app &>> $LOG
+mkdir -p /app 
 VALIDATE $? "Creating directory"
 
 curl -o /tmp/cart.zip https://roboshop-builds.s3.amazonaws.com/cart.zip &>> $LOGFILE
 VALIDATE $? " storing in temporary location"
 
-cd /app &>> $LOG
+cd /app 
 VALIDATE $? "changing directory to app" 
 
 unzip /tmp/cart.zip &>> $LOGFILE
