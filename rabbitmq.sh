@@ -1,12 +1,13 @@
 #!/bin/bash
 ID=$(id -u)
-R=\e[31m
-G=\e[32m
-Y=\e[33m
-TIME=$(date +%F-%H-%M-%S)
-LOG="/tmp/$0-$TIME.log"
+R="\e[31m"
+G="\e[32m"
+Y="\e[33m"
+N="\e[0m"
+TIMESTAMP=$(date +%F-%H-%M-%S)
+LOGFILE="/tmp/$0-$TIMESTAMP.log"
 
-if [ id -ne 0 ]
+if [ $ID -ne 0 ]
 then
   echo"you are not root user...$R FAILED $N"
   exit1
@@ -22,31 +23,31 @@ VALIDATE(){
       echo -e "$2...$G SUCCESS $N"
     fi
 }
-curl -s https://packagecloud.io/install/repositories/rabbitmq/erlang/script.rpm.sh | bash &>> $LOG
+curl -s https://packagecloud.io/install/repositories/rabbitmq/erlang/script.rpm.sh | bash &>> $LOGFILE
 
 VALIDATE $? "Downloading erlang script"
 
-curl -s https://packagecloud.io/install/repositories/rabbitmq/rabbitmq-server/script.rpm.sh | bash &>> $LOG
+curl -s https://packagecloud.io/install/repositories/rabbitmq/rabbitmq-server/script.rpm.sh | bash &>> $LOGFILE
 
 VALIDATE $? "Downloading rabbitmq script"
 
-dnf install rabbitmq-server -y  &>> $LOG
+dnf install rabbitmq-server -y  &>> $LOGFILE
 
 VALIDATE $? "Installing RabbitMQ server"
 
-systemctl enable rabbitmq-server &>> $LOG
+systemctl enable rabbitmq-server &>> $LOGFILE
 
-VALIDATE $? "Enabling rabbitmq server" &>> $LOG
+VALIDATE $? "Enabling rabbitmq server" 
 
-systemctl start rabbitmq-server &>> $LOG
+systemctl start rabbitmq-server &>> $LOGFILE
 
 VALIDATE $? "Starting rabbitmq server"
 
-rabbitmqctl add_user roboshop roboshop123 &>> $LOG
+rabbitmqctl add_user roboshop roboshop123 &>> $LOGFILE
 
 VALIDATE $? "creating user"
 
-rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*" &>> $LOG
+rabbitmqctl set_permissions -p / roboshop ".*" ".*" ".*" &>> $LOGFILE
 
 VALIDATE $? "setting permission"
    

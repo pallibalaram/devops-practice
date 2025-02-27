@@ -33,59 +33,59 @@ id roboshop
 if [ $? -ne 0 ]
 then
     useradd roboshop
-    VALIDATE $? "roboshop user creation"
+    VALIDATE $? "roboshop user created"
 else
-    echo -e "roboshop user already exist $Y SKIPPING $N"
+    echo -e "alrady user exists... $Y SKIPPING $N"
 fi
 
-mkdir -p /app
+mkdir -p /app &>> $LOGFILE
 
-VALIDATE $? "creating app directory"
+VALIDATE $? "creating app directory  "
 
 curl -L -o /tmp/shipping.zip https://roboshop-builds.s3.amazonaws.com/shipping.zip &>> $LOGFILE
 
 VALIDATE $? "Downloading shipping"
 
-cd /app
+cd /app &>> $LOGFILE
 
-VALIDATE $? "moving to app directory"
+VALIDATE $? "moving to app directory "
 
 unzip -o /tmp/shipping.zip &>> $LOGFILE
 
-VALIDATE $? "unzipping shipping"
+VALIDATE $? "unzipping shipping "
 
 mvn clean package &>> $LOGFILE
 
-VALIDATE $? "Installing dependencies"
+VALIDATE $? "Installing dependencies "
 
 mv target/shipping-1.0.jar shipping.jar &>> $LOGFILE
 
-VALIDATE $? "renaming jar file"
+VALIDATE $? "renaming jar file "
 
-cp /C/users/BALARAM/repo/shipping.service /etc/systemd/system/shipping.service &>> $LOGFILE
+cp /home/centos/devops-practice/shipping.service /etc/systemd/system/shipping.service &>> $LOGFILE
 
-VALIDATE $? "copying shipping service"
+VALIDATE $? "copying shipping service "
 
 systemctl daemon-reload &>> $LOGFILE
 
-VALIDATE $? "deamon reload"
+VALIDATE $? "deamon reload "
 
 systemctl enable shipping  &>> $LOGFILE
 
-VALIDATE $? "enable shipping"
+VALIDATE $? "enable shipping "
 
 systemctl start shipping &>> $LOGFILE
 
-VALIDATE $? "start shipping"
+VALIDATE $? "started shipping "
 
 dnf install mysql -y &>> $LOGFILE
 
-VALIDATE $? "install MySQL client"
+VALIDATE $? "installing MySQL client "
 
 mysql -h mysql.pavandev.online -uroot -pRoboShop@1 < /app/schema/shipping.sql &>> $LOGFILE
 
-VALIDATE $? "loading shipping data"
+VALIDATE $? "loading shipping data "
 
 systemctl restart shipping &>> $LOGFILE
 
-VALIDATE $? "restart shipping"
+VALIDATE $? "restart shipping "

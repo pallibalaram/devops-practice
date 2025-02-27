@@ -25,6 +25,7 @@ else
 fi
 
 echo "script started execting at $TIME "
+
 dnf module disable nodejs -y &>> $LOG
 VALIDATE $? "nodejs disabled"
 
@@ -55,12 +56,10 @@ VALIDATE $? "changing directory to app"
 unzip /tmp/cart.zip &>> $LOG
 VALIDATE $? "unzipping cart"
 
-cd /app
-
 npm install &>> $LOG
 VALIDATE $? " npm installation"
 
-cp /c/users/BALARAM/repo/cart.service /etc/systemd/system/cart.service &>> $LOG
+cp /home/centos/devops-practice/cart.service /etc/systemd/system/cart.service &>> $LOG
 VALIDATE $? "coping to cart service"
 
 systemctl daemon-reload &>> $LOG

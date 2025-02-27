@@ -4,8 +4,8 @@ R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
 N="\E[0m"
-TIME=$(date +%F-%H-%M-%S)
-LOG= "/tmp/$0-$TIME.log"
+TIMESTAMP=$(date +%F-%H-%M-%S)
+LOGFILE= "/tmp/$0-$TIMESTAMP.log"
 exec &>$LOGFILE
 
 VALIDATE(){
@@ -18,7 +18,7 @@ VALIDATE(){
     fi
 }
 
-if [ $id -ne 0 ]
+if [ $ID -ne 0 ]
 then 
   echo -e "you are not root user...$R Error $N"
   exit 1
@@ -29,19 +29,19 @@ fi
 echo "script started execting at $TIME "
 
 dnf install https://rpms.remirepo.net/enterprise/remi-release-8.rpm -y
-VALIDATE $? "installing redis packages"
+VALIDATE $? "installing redis packages...$G success $N"
 
 dnf module enable redis:remi-6.2 -y
-VALIDATE $? "enable redis packages"
+VALIDATE $? "enable redis packages...$G success $N"
 
 dnf install redis -y
-VALIDATE $? "installing redis"
+VALIDATE $? "installing redis...$G success $N"
 
 sed -i 's/127.0.0.1/0.0.0.0/g' /etc/redis/redis.conf
-VALIDATE $? "allowing remote connections"
+VALIDATE $? "allowing remote connections...$G success $N"
 
 systemctl enable redis
-VALIDATE $? "Enabled Redis"
+VALIDATE $? "Enabled Redis...$G success $N"
 
 systemctl start redis
-VALIDATE $? "started Redis"
+VALIDATE $? "started Redis...$G success $N"

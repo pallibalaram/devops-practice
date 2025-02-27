@@ -4,8 +4,8 @@ R="\e[31m"
 G="\e[32m"
 Y="\e[33m"
 N="\E[0m"
-TIME=$(date +%F-%H-%M-%S)
-LOG= "/tmp/$0-$TIME.log"
+TIMESTAMP=$(date +%F-%H-%M-%S)
+LOGFILE= "/tmp/$0-$TIMESTAMP.log"
 VALIDATE(){
     if [ $1 -ne 0 ]
     then
@@ -16,7 +16,7 @@ VALIDATE(){
     fi
 }
 
-if [ $id -ne 0 ]
+if [ $ID -ne 0 ]
 then 
   echo -e "you are not root user...$R Error $N"
   exit 1
@@ -26,13 +26,13 @@ fi
 
 echo "script started execting at $TIME "
 
-dnf module disable nodejs -y &>> $LOG
+dnf module disable nodejs -y &>> $LOGFILE
 VALIDATE $? "nodejs disabled"
 
-dnf module enable nodejs:18 -y &>> $LOG
+dnf module enable nodejs:18 -y &>> $LOGFILE
 VALIDATE $? "nodejs enabled"
 
-dnf install nodejs -y &>> $LOG
+dnf install nodejs -y &>> $LOGFILE
 VALIDATE $? " nodejs install"
 
 id roboshop
@@ -41,50 +41,50 @@ then
   useradd roboshop
   VALIDATE $? "roboshop user created"
 else
-  echo -e "alrady user exists"
+  echo -e "already user exists...$Y SKIPPING $N"
 fi
 
-mkdir /app -p
+mkdir /app -p &>> $LOGFILE
 VALIDATE $? "creating app directory"
 
-curl -L -o /tmp/user.zip https://roboshop-builds.s3.amazonaws.com/user.zip
+curl -L -o /tmp/user.zip https://roboshop-builds.s3.amazonaws.com/user.zip &>> $LOGFILE
 VALIDATE $? "Downloading user application"
 
 cd /app 
 
-unzip -o /tmp/user.zip  &>> $LOG
+unzip -o /tmp/user.zip  &>> $LOGFILE
 
 VALIDATE $? "unzipping user"
 
-npm install  &>> $LOG
+npm install  &>> $LOGFILE
 
 VALIDATE $? "Installing dependencies"
 
-cp /c/users/BALARAM/repo/user.service /etc/systemd/system/user.service 
+cp /home/centos/devops-practice/user.service /etc/systemd/system/user.service &>> $LOGFILE
 
 VALIDATE $? "Copying user service file"
 
-systemctl daemon-reload &>> $LOG
+systemctl daemon-reload &>> $LOGFILE
 
 VALIDATE $? "user daemon reload"
 
-systemctl enable user &>> $LOG
+systemctl enable user &>> $LOGFILE
 
 VALIDATE $? "Enable user"
 
-systemctl start user &>> $LOG
+systemctl start user &>> $LOGFILE
 
 VALIDATE $? "Starting user"
 
-cp /c/users/BALARAM/repo/mongo.repo /etc/yum.repos.d/mongo.repo
+cp /home/centos/devops-practice/mongo.repo /etc/yum.repos.d/mongo.repo &>> $LOGFILE
 
 VALIDATE $? "copying mongodb repo"
 
-dnf install mongodb-org-shell -y &>> $LOG
+dnf install mongodb-org-shell -y &>> $LOGFILE
 
 VALIDATE $? "Installing MongoDB client"
 
-mongo --host $MONGDB_HOST </app/schema/user.js &>> $LOG
+mongo --host $MONGDB_HOST </app/schema/user.js &>> $LOGFILE
 
 VALIDATE $? "Loading user data into MongoDB"
 

@@ -8,9 +8,9 @@ N="\e[0m"
 MONGDB_HOST=mongodb.daws76s.online
 
 TIMESTAMP=$(date +%F-%H-%M-%S)
-LOG="/tmp/$0-$TIMESTAMP.log"
+LOGFILE="/tmp/$0-$TIMESTAMP.log"
 
-echo "script stareted executing at $TIMESTAMP" &>> $LOG
+echo "script stareted executing at $TIMESTAMP" &>> $LOGFILE
 
 VALIDATE(){
     if [ $1 -ne 0 ]
@@ -30,7 +30,7 @@ else
     echo "You are root user"
 fi 
 
-dnf install python36 gcc python3-devel -y &>> $LOG
+dnf install python36 gcc python3-devel -y &>> $LOGFILE
 
 id roboshop 
 if [ $? -ne 0 ]
@@ -41,36 +41,36 @@ else
     echo -e "roboshop user already exist $Y SKIPPING $N"
 fi
 
-mkdir -p /app &>> $LOG
+mkdir -p /app &>> $LOGFILE
 
 VALIDATE $? "creating app directory"
 
-curl -L -o /tmp/payment.zip https://roboshop-builds.s3.amazonaws.com/payment.zip &>> $LOG
+curl -L -o /tmp/payment.zip https://roboshop-builds.s3.amazonaws.com/payment.zip &>> $LOGFILE
 
 VALIDATE $? "Downloading payment"
 
 cd /app 
 
-unzip -o /tmp/payment.zip &>> $LOG
+unzip -o /tmp/payment.zip &>> $LOGFILE
 
 VALIDATE $? "unzipping payment"
 
-pip3.6 install -r requirements.txt &>> $LOG
+pip3.6 install -r requirements.txt &>> $LOGFILE
 
 VALIDATE $? "Installing Dependencies"
 
-cp /C/users/BALARAM/repo/payment.service /etc/systemd/system/payment.service &>> $LOG
+cp /home/centos/devops-practice/payment.service /etc/systemd/system/payment.service &>> $LOGFILE
 
 VALIDATE $? "Copying payment service"
 
-systemctl daemon-reload &>> $LOG
+systemctl daemon-reload &>> $LOGFILE
 
 VALIDATE $? "daemon reaload"
 
-systemctl enable payment  &>> $LOG
+systemctl enable payment  &>> $LOGFILE
 
 VALIDATE $? "Enable payment"
 
-systemctl start payment &>> $LOG
+systemctl start payment &>> $LOGFILE
 
 VALIDATE $? "Start payment"
