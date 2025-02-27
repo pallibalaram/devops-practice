@@ -26,7 +26,7 @@ else
   echo -e "you are root user...$G success $N"
 fi
 
-echo "script started execting at $TIME "
+echo "script started execting at $TIMESTAMP "
 
 dnf install https://rpms.remirepo.net/enterprise/remi-release-8.rpm -y
 VALIDATE $? "installing redis packages...$G success $N"
