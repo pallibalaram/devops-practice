@@ -6,7 +6,7 @@ Y="\e[33m"
 N="\E[0m"
 TIMESTAMP=$(date +%F-%H-%M-%S)
 LOGFILE="/tmp/$0-$TIMESTAMP.log"
-MONGDB_HOST="mongod.pavandev.online"
+MONGDB_HOST=mongod.pavandev.online
 VALIDATE(){
     if [ $1 -ne 0 ]
     then
