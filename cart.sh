@@ -5,7 +5,7 @@ G="\e[32m"
 Y="\e[33m"
 N="\E[0m"
 TIME=$(date +%F-%H-%M-%S)
-LOGFILE= "/tmp/$0-$TIME.log"
+LOGFILE="/tmp/$0-$TIME.log"
 VALIDATE(){
     if [ $1 -ne 0 ]
     then
@@ -26,7 +26,7 @@ fi
 
 echo "script started execting at $TIME "
 
-dnf module disable nodejs -y &>> $LOGFILE
+dnf module disable nodejs -y  &>> $LOGFILE
 VALIDATE $? "nodejs disabled"
 
 dnf module enable nodejs:18 -y &>> $LOGFILE
