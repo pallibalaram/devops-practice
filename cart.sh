@@ -5,7 +5,7 @@ G="\e[32m"
 Y="\e[33m"
 N="\E[0m"
 TIME=$(date +%F-%H-%M-%S)
-LOG= "/tmp/$0-$TIME.log"
+LOGFILE= "/tmp/$0-$TIME.log"
 VALIDATE(){
     if [ $1 -ne 0 ]
     then
@@ -26,13 +26,13 @@ fi
 
 echo "script started execting at $TIME "
 
-dnf module disable nodejs -y &>> $LOG
+dnf module disable nodejs -y &>> $LOGFILE
 VALIDATE $? "nodejs disabled"
 
-dnf module enable nodejs:18 -y &>> $LOG
+dnf module enable nodejs:18 -y &>> $LOGFILE
 VALIDATE $? "nodejs enabled"
 
-dnf install nodejs -y &>> $LOG
+dnf install nodejs -y &>> $LOGFILE
 VALIDATE $? " nodejs install"
 
 id roboshop
@@ -47,28 +47,28 @@ fi
 mkdir -p /app &>> $LOG
 VALIDATE $? "Creating directory"
 
-curl -o curl -L -o /tmp/cart.zip https://roboshop-builds.s3.amazonaws.com/cart.zip &>> $LOG
+curl -o curl -L -o /tmp/cart.zip https://roboshop-builds.s3.amazonaws.com/cart.zip &>> $LOGFILE
 VALIDATE $? " storing in temporary location"
 
 cd /app &>> $LOG
 VALIDATE $? "changing directory to app" 
 
-unzip /tmp/cart.zip &>> $LOG
+unzip /tmp/cart.zip &>> $LOGFILE
 VALIDATE $? "unzipping cart"
 
-npm install &>> $LOG
+npm install &>> $LOGFILE
 VALIDATE $? " npm installation"
 
-cp /home/centos/devops-practice/cart.service /etc/systemd/system/cart.service &>> $LOG
+cp /home/centos/devops-practice/cart.service /etc/systemd/system/cart.service &>> $LOGFILE
 VALIDATE $? "coping to cart service"
 
-systemctl daemon-reload &>> $LOG
+systemctl daemon-reload &>> $LOGFILE
 VALIDATE $? "reloading systemctl"
 
-systemctl enable cart &>> $LOG
+systemctl enable cart &>> $LOGFILE
 VALIDATE $? "enabling cart"
 
-systemctl start cart &>> $LOG
+systemctl start cart &>> $LOGFILE
 VALIDATE $? "starting cart"
 
 
