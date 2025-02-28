@@ -38,54 +38,41 @@ else
     echo -e "alrady user exists... $Y SKIPPING $N"
 fi
 
-mkdir -p /app &>> $LOGFILE
-
+mkdir -p /app 
 VALIDATE $? "creating app directory  "
 
 curl -L -o /tmp/shipping.zip https://roboshop-builds.s3.amazonaws.com/shipping.zip &>> $LOGFILE
-
 VALIDATE $? "Downloading shipping"
 
-cd /app &>> $LOGFILE
-
+cd /app 
 VALIDATE $? "moving to app directory "
 
 unzip -o /tmp/shipping.zip &>> $LOGFILE
-
 VALIDATE $? "unzipping shipping "
 
 mvn clean package &>> $LOGFILE
-
 VALIDATE $? "Installing dependencies "
 
 mv target/shipping-1.0.jar shipping.jar &>> $LOGFILE
-
 VALIDATE $? "renaming jar file "
 
 cp /home/centos/devops-practice/shipping.service /etc/systemd/system/shipping.service &>> $LOGFILE
-
 VALIDATE $? "copying shipping service "
 
 systemctl daemon-reload &>> $LOGFILE
-
 VALIDATE $? "deamon reload "
 
 systemctl enable shipping  &>> $LOGFILE
-
 VALIDATE $? "enable shipping "
 
 systemctl start shipping &>> $LOGFILE
-
 VALIDATE $? "started shipping "
 
 dnf install mysql -y &>> $LOGFILE
-
 VALIDATE $? "installing MySQL client "
 
 mysql -h mysql.pavandev.online -uroot -pRoboShop@1 < /app/schema/shipping.sql &>> $LOGFILE
-
 VALIDATE $? "loading shipping data "
 
 systemctl restart shipping &>> $LOGFILE
-
 VALIDATE $? "restart shipping "

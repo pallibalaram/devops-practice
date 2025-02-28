@@ -6,7 +6,7 @@ Y="\e[33m"
 N="\E[0m"
 TIMESTAMP=$(date +%F-%H-%M-%S)
 LOGFILE="/tmp/$0-$TIMESTAMP.log"
-MONGDB_HOST=mongod.pavandev.online
+MONGDB_HOST=mongodb.pavandev.online
 VALIDATE(){
     if [ $1 -ne 0 ]
     then
@@ -25,7 +25,7 @@ else
   echo -e "you are root user...$G success $N"
 fi
 
-echo "script started execting at $TIME "
+echo "script started execting at $TIMESTAMP"
 
 dnf module disable nodejs -y &>> $LOGFILE
 VALIDATE $? "nodejs disabled"
@@ -45,7 +45,7 @@ else
   echo -e "already user exists...$Y SKIPPING $N"
 fi
 
-mkdir /app -p &>> $LOGFILE
+mkdir /app -p 
 VALIDATE $? "creating app directory"
 
 curl -L -o /tmp/user.zip https://roboshop-builds.s3.amazonaws.com/user.zip &>> $LOGFILE
@@ -54,39 +54,30 @@ VALIDATE $? "Downloading user application"
 cd /app 
 
 unzip -o /tmp/user.zip  &>> $LOGFILE
-
 VALIDATE $? "unzipping user"
 
 npm install  &>> $LOGFILE
-
 VALIDATE $? "Installing dependencies"
 
 cp /home/centos/devops-practice/user.service /etc/systemd/system/user.service &>> $LOGFILE
-
 VALIDATE $? "Copying user service file"
 
 systemctl daemon-reload &>> $LOGFILE
-
 VALIDATE $? "user daemon reload"
 
 systemctl enable user &>> $LOGFILE
-
 VALIDATE $? "Enable user"
 
 systemctl start user &>> $LOGFILE
-
 VALIDATE $? "Starting user"
 
 cp /home/centos/devops-practice/mongo.repo /etc/yum.repos.d/mongo.repo &>> $LOGFILE
-
 VALIDATE $? "copying mongodb repo"
 
 dnf install mongodb-org-shell -y &>> $LOGFILE
-
 VALIDATE $? "Installing MongoDB client"
 
 mongo --host $MONGDB_HOST </app/schema/user.js &>> $LOGFILE
-
 VALIDATE $? "Loading user data into MongoDB"
 
 

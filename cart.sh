@@ -24,7 +24,7 @@ else
   echo -e "you are root user...$G success $N"
 fi
 
-echo "script started execting at $TIME "
+echo "script started execting at $TIMESTAMP"
 
 dnf module disable nodejs -y  &>> $LOGFILE
 VALIDATE $? "nodejs disabled"
