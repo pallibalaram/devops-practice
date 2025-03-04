@@ -6,7 +6,7 @@ DOMIAN_NAME="pavandev.online"
 INSTANCES=( "mongodb" "catalogue" "cart" "user" "redis" "web" "mysql" "shipping" "rabbitmq" "payment" )
 for i in "${INSTANCES[@]}"
 do
-    if [ $i=mongodb ] || [ $i=shipping ] ||[ $i=mysql ]
+    if [ $i==mongodb ] || [ $i==shipping ] || [ $i==mysql ]
     then
         INSTANCE_TYPE="t3.small"
     else
