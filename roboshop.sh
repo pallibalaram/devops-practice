@@ -20,7 +20,7 @@ do
       {
         "Comment": "Testing creating a record set"
         ,"Changes": [{
-          "Action"              : "UPSERT"
+          "Action"              : "CREATE"
           ,"ResourceRecordSet"  : {
             "Name"              : "' $i'.'$DOMIAN_NAME'"
             ,"Type"             : "A"
