@@ -1,9 +1,9 @@
 #!/bin/bash
 
 AMI=ami-0b4f379183e5706b9 
-SG_ID=sg-04c9dc29e1a3fed16 
+SG_ID=sg-01e0bdf8b193bbf49
 INSTANCES=("mongodb" "redis" "mysql" "rabbitmq" "catalogue" "user" "cart" "shipping" "payment" "dispatch" "web")
-ZONE_ID=Z05391511HI4N0V6H16ZN 
+ZONE_ID=Z0818389HR4SDDT1PLEZ 
 DOMAIN_NAME="pavandev.online"
 for i in "${INSTANCES[@]}"
 do
@@ -25,7 +25,7 @@ do
     {
         "Comment": "Creating a record set for cognito endpoint"
         ,"Changes": [{
-        "Action"              : "CREATE"
+        "Action"              : "UPSERT"
         ,"ResourceRecordSet"  : {
             "Name"              : "'$i'.'$DOMAIN_NAME'"
             ,"Type"             : "A"
@@ -38,3 +38,5 @@ do
     }'
 
 done
+
+
