@@ -1,7 +1,7 @@
 #!/bin/bash
 
 AMI=ami-0b4f379183e5706b9 
-SG_ID=sg-0a27e75c3663ae198
+SG_ID=sg-04ce5bc2af573d18d
 INSTANCES=("mongodb" "redis" "mysql" "rabbitmq" "catalogue" "user" "cart" "shipping" "payment" "dispatch" "web")
 ZONE_ID=Z0818389HR4SDDT1PLEZ 
 DOMAIN_NAME="pavandev.online"
